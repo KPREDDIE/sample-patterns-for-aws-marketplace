@@ -155,8 +155,14 @@ class DomainAdapter:
         """Add tools to the shared registry."""
         self._tool_registry.update(tools)
 
-    def adapt(self, base_model: Any, config: DomainConfig) -> DomainAgent:
-        """Produce a specialized DomainAgent from a base model and domain config."""
+    def adapt(self, base_model: Any, config: DomainConfig, checkpointer: Any = None) -> DomainAgent:
+        """Produce a specialized DomainAgent from a base model and domain config.
+
+        If ``checkpointer`` is provided (any LangGraph ``BaseCheckpointSaver``),
+        it is attached to the compiled agent for session persistence. This lets
+        callers add framework-level conversation continuity (e.g. Module 7's
+        Redis-backed checkpointer) without changing the adaptation pattern.
+        """
         import logging
         logger = logging.getLogger(__name__)
 
@@ -174,9 +180,14 @@ class DomainAdapter:
         except Exception:
             logger.warning("Guardrail creation failed, proceeding without guardrails")
 
-        # Step 4: Assemble LangGraph agent
+        # Step 4: Assemble LangGraph agent (with optional checkpointer)
         from langgraph.prebuilt import create_react_agent
-        agent = create_react_agent(base_model, tools, prompt=system_prompt)
+        if checkpointer is not None:
+            agent = create_react_agent(
+                base_model, tools, prompt=system_prompt, checkpointer=checkpointer
+            )
+        else:
+            agent = create_react_agent(base_model, tools, prompt=system_prompt)
 
         return DomainAgent(
             agent=agent,
