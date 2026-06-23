@@ -1,0 +1,66 @@
+# Module 7: Agent Memory Systems — pinned dependencies
+# Generated from module7/.venv after installation
+# Install: pip install -r requirements.txt
+
+# ISV partners (AWS Marketplace)
+redis==7.4.0            # Session memory — LangGraph checkpointer backend (Redis Cloud)
+pymongo==4.17.0         # Long-term semantic memory — Atlas Vector Search (MongoDB Atlas)
+neo4j==6.2.0            # Graph relationship memory (Neo4j Aura)
+
+# TLS trust store — provides Mozilla's CA bundle so Atlas/Aura certificate
+# chains verify on Python builds with an empty system trust store (macOS).
+certifi==2026.5.20
+
+# LangChain / LangGraph
+langchain-aws==1.5.0
+langgraph==1.2.0
+
+# AWS SDK
+boto3==1.43.11
+
+# Demo output
+rich==15.0.0
+
+# Transitive dependencies (pinned for reproducibility)
+annotated-types==0.7.0
+anyio==4.13.0
+botocore==1.43.11
+charset-normalizer==3.4.7
+dnspython==2.8.0
+h11==0.16.0
+h2==4.3.0
+hpack==4.1.0
+httpcore==1.0.9
+httpx==0.28.1
+hyperframe==6.1.0
+idna==3.15
+jmespath==1.1.0
+jsonpatch==1.33
+jsonpointer==3.1.1
+langchain-core==1.4.0
+langchain-protocol==0.0.15
+langgraph-checkpoint==4.1.0
+langgraph-prebuilt==1.1.0
+langgraph-sdk==0.3.14
+langsmith==0.8.5
+msgspec==0.21.1
+numpy==2.4.6
+orjson==3.11.9
+ormsgpack==1.12.2
+packaging==26.2
+pydantic==2.13.4
+pydantic-core==2.46.4
+python-dateutil==2.9.0.post0
+pytz==2026.2
+pyyaml==6.0.3
+requests==2.34.2
+requests-toolbelt==1.0.0
+s3transfer==0.17.0
+six==1.17.0
+tenacity==9.1.4
+typing-extensions==4.15.0
+typing-inspection==0.4.2
+urllib3==2.7.0
+uuid-utils==0.16.0
+xxhash==3.7.0
+zstandard==0.25.0

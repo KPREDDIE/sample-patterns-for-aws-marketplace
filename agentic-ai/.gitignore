@@ -218,3 +218,9 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Local-only live credential helper (contains real secrets — never commit)
+setup_live_env.sh
+
+# macOS
+.DS_Store

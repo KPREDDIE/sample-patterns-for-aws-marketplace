@@ -16,6 +16,7 @@ import random
 import time
 import urllib.request
 import urllib.error
+import urllib.parse
 from typing import Any
 
 
@@ -27,8 +28,21 @@ MODULE_ENDPOINTS = {
 
 _PING_TIMEOUT = 2
 _CALL_TIMEOUT = 60
+_ALLOWED_SCHEMES = ("http", "https")
 
 _endpoint_status: dict[str, bool | None] = {}
+
+
+def _validate_http_url(url: str) -> None:
+    """Reject non-HTTP(S) URLs before they reach urlopen.
+
+    These URLs are built from the fixed MODULE_ENDPOINTS map, but validating
+    the scheme guards against a misconfigured endpoint introducing a file://
+    or other unexpected scheme.
+    """
+    scheme = urllib.parse.urlsplit(url).scheme.lower()
+    if scheme not in _ALLOWED_SCHEMES:
+        raise ValueError(f"refusing to open non-HTTP(S) URL with scheme {scheme!r}")
 
 
 def is_endpoint_live(module: str) -> bool:
@@ -42,10 +56,12 @@ def is_endpoint_live(module: str) -> bool:
         return False
 
     try:
-        req = urllib.request.Request(f"{base_url}/ping", method="GET")
-        with urllib.request.urlopen(req, timeout=_PING_TIMEOUT) as resp:
+        ping_url = f"{base_url}/ping"
+        _validate_http_url(ping_url)
+        req = urllib.request.Request(ping_url, method="GET")
+        with urllib.request.urlopen(req, timeout=_PING_TIMEOUT) as resp:  # nosec B310 - scheme validated by _validate_http_url
             _endpoint_status[module] = resp.status == 200
-    except (urllib.error.URLError, OSError, TimeoutError):
+    except (urllib.error.URLError, OSError, TimeoutError, ValueError):
         _endpoint_status[module] = False
 
     return _endpoint_status[module]
@@ -65,9 +81,10 @@ def call_endpoint(module: str, path: str, payload: dict[str, Any]) -> dict[str, 
     )
 
     try:
-        with urllib.request.urlopen(req, timeout=_CALL_TIMEOUT) as resp:
+        _validate_http_url(url)
+        with urllib.request.urlopen(req, timeout=_CALL_TIMEOUT) as resp:  # nosec B310 - scheme validated by _validate_http_url
             return json.loads(resp.read().decode("utf-8"))
-    except (urllib.error.URLError, OSError, TimeoutError, json.JSONDecodeError):
+    except (urllib.error.URLError, OSError, TimeoutError, ValueError, json.JSONDecodeError):
         return None
 
 

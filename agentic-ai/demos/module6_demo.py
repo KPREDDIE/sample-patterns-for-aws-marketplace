@@ -167,7 +167,8 @@ def pause(msg: str = "  ↵  Press Enter to continue...") -> None:
 
 
 def clear_screen() -> None:
-    os.system("cls" if os.name == "nt" else "clear")
+    # Clear via ANSI escape (cursor home + clear screen) to avoid spawning a shell.
+    print("\033[H\033[2J", end="")
 
 
 def checkpoint_sep() -> None:

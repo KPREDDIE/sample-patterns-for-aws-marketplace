@@ -88,8 +88,11 @@ class Module6Handler(BaseHTTPRequestHandler):
 
 def main() -> None:
     port = int(os.getenv("MODULE6_PORT", "8086"))
-    server = HTTPServer(("0.0.0.0", port), Module6Handler)
-    print(f"[Module 6] Server running on port {port}")
+    # Bind to loopback by default. Set MODULE6_HOST=0.0.0.0 to bind to all
+    # interfaces (e.g. when running inside a container).
+    host = os.getenv("MODULE6_HOST", "127.0.0.1")
+    server = HTTPServer((host, port), Module6Handler)
+    print(f"[Module 6] Server running on {host}:{port}")
     print(f"[Module 6] Endpoints: /ping, /status, /workers, /start, /signal, /traces")
     server.serve_forever()
 
