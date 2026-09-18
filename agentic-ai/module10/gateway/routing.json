@@ -1,0 +1,42 @@
+{
+  "strategy": {
+    "mode": "conditional",
+    "conditions": [
+      {
+        "query": {"metadata.agent_role": {"$eq": "recovery-planner"}},
+        "then": "recovery-planning"
+      },
+      {
+        "query": {"metadata.agent_role": {"$eq": "devops-companion"}},
+        "then": "investigation"
+      }
+    ]
+  },
+  "retry": {"attempts": 0},
+  "targets": [
+    {
+      "name": "investigation",
+      "provider": "bedrock",
+      "override_params": {"model": "us.openai.gpt-5.6-luna"}
+    },
+    {
+      "name": "recovery-planning",
+      "strategy": {
+        "mode": "fallback",
+        "on_status_codes": [408, 429, 500, 502, 503, 504]
+      },
+      "targets": [
+        {
+          "name": "preferred-planner",
+          "provider": "bedrock",
+          "override_params": {"model": "us.openai.gpt-5.6-terra"}
+        },
+        {
+          "name": "backup-planner",
+          "provider": "bedrock",
+          "override_params": {"model": "us.openai.gpt-5.6-luna"}
+        }
+      ]
+    }
+  ]
+}

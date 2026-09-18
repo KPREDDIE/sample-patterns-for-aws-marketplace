@@ -17,6 +17,7 @@ This repository contains multiple modules demonstrating different agent framewor
 | **7** | Agent memory systems: session, semantic, and relationship memory | LangGraph | Redis Cloud, MongoDB Atlas, Neo4j Aura |
 | **8** | Agent identity and access management | LangGraph | Auth0, CyberArk |
 | **9** | Data pipelines and lineage: governed, fresh, traceable knowledge | LangGraph | Confluent Cloud, Databricks |
+| **10** | Agent exposure, capability rollout, model routing, and trace inspection | AWS Strands | LaunchDarkly, Portkey AI, Logz.io |
 
 Every module runs in a mock mode that needs no cloud accounts, so any module can
 be run standalone. See each module's `README.md` for its own quickstart, and
@@ -97,6 +98,7 @@ agentic-ai/
 ├── module7/                    # Agent memory systems
 ├── module8/                    # Agent identity and access management
 ├── module9/                    # Data pipelines and lineage
+├── module10/                   # Agent exposure and ISV control planes
 │
 ├── demos/                      # moduleN_demo.py, one guided demo per module
 ├── tests/                      # pytest suites, all runnable in mock mode
@@ -210,6 +212,12 @@ Modules 7, 8, and 9 ship their own `requirements.txt`, and Module 9 adds
 ```bash
 pip install -r module9/requirements.txt -r module9/requirements-live.txt
 ```
+
+### Module 10: Agent Exposure and Integration
+
+Follow the [Module 10 quick start](module10/README.md) for local and cloud run
+commands, UI credentials, and cleanup. First-time AWS setup is in the
+[deployment guide](module10/deployment/README.md).
 
 ### Routing Agent
 
@@ -380,7 +388,7 @@ The two agents are designed to work together in a multi-agent workflow:
 | Evaluation and routing patterns | Module 3 |
 | Multi-agent supervisor pattern | Module 4 |
 | Long-term memory (DynamoDB / vector store) | Module 7 |
-| RAG / Knowledge Base | Module 10 |
+| Local agent exposure and ISV control planes | Module 10 |
 | Production IAM hardening | Module 8 |
 | CloudWatch / X-Ray tracing | Module 12 |
 

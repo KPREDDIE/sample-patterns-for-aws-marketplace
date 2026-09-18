@@ -1,0 +1,5 @@
+# Sections 1 and 2: local flags and live Bedrock Responses.
+# Section 2 also needs Node.js; install Portkey with gateway/setup.py.
+openai[bedrock]>=3.10.0,<4
+launchdarkly-server-sdk>=9.17.0,<10
+rich>=13.0.0

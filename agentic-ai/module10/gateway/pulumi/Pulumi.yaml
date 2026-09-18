@@ -1,0 +1,4 @@
+name: module10-portkey
+runtime:
+  name: python
+description: On-demand public HTTPS Portkey gateway and operator console on ECS
