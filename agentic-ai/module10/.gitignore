@@ -1,0 +1,15 @@
+artifacts/
+.cache/
+.local/
+.env*
+!.env.example
+**/.env*
+!**/.env.example
+**/node_modules/
+**/.pulumi/
+**/Pulumi.*.yaml
+**/credentials*.json
+**/outputs*.json
+**/stack.yaml
+**/build-report*.json
+ui/config.json

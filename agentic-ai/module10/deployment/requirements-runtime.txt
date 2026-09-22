@@ -1,0 +1,3 @@
+-r requirements-review.txt
+-r requirements-telemetry.txt
+boto3==1.43.6

@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>DevOps Companion - Deployment Investigation</title>
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+  <script type="module" src="app.mjs"></script>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="/" aria-label="DevOps Companion home"><span class="mark" aria-hidden="true">⌘</span> DevOps Companion</a>
+    <div class="account"><span id="identity">Workshop demo</span><button id="sign-in" type="button" disabled>Sign in</button><button id="sign-out" type="button" hidden>Sign out</button></div>
+  </header>
+  <main>
+    <section class="intro">
+      <h1>DevOps Companion - Deployment Investigation</h1>
+      <p class="lede">Describe a deployment issue. Your Companion gathers evidence and, when enabled for your team, prepares a recovery plan.</p>
+      <p class="demo-note">Workshop sandbox · Fictional deployment evidence · Drafts for human review</p>
+    </section>
+    <p id="notice" class="notice" role="status" aria-live="polite">Loading application…</p>
+    <section class="composer" aria-labelledby="request-label">
+      <form id="request-form">
+        <div class="composer-heading"><label id="request-label" for="request">What would you like to investigate?</label><button class="text-button" id="example" type="button">Use example request ↗</button></div>
+        <textarea id="request" name="request" rows="4" maxlength="4000" required placeholder="Describe the deployment, what failed, and what you want to understand…" aria-describedby="request-help"></textarea>
+        <div class="composer-footer"><p id="request-help">Each request starts an independent investigation.</p><button class="primary" id="investigate" type="submit" disabled>Investigate <span aria-hidden="true">↗</span></button></div>
+      </form>
+    </section>
+    <div class="history-heading"><h2>Your investigations</h2><button id="clear" type="button" class="text-button">Clear view</button></div>
+    <div id="history"><div id="empty" class="empty"><span class="empty-icon" aria-hidden="true">◎</span><h3>Start with a question.</h3><p>Your response will appear here. Expand its details to see the capabilities, model routing, and trace behind it.</p></div></div>
+    <details id="demo-controls" class="demo-controls" hidden>
+      <summary>Lab controls</summary>
+      <div class="demo-controls-body">
+        <section id="planning-panel" class="planning-panel" aria-labelledby="planning-title" hidden>
+          <div>
+            <h2 id="planning-title">LaunchDarkly · Recovery planning</h2>
+            <p id="planning-state" role="status" aria-live="polite">Checking shared flag…</p>
+            <p class="planning-note">When on, planning is available to the platform team. Payments remains investigation-only. Changes apply to new investigations.</p>
+            <p id="planning-feedback" class="planning-note" role="status" aria-live="polite"></p>
+          </div>
+          <button id="planning-toggle" type="button" disabled hidden>Checking…</button>
+        </section>
+        <section id="resilience-panel" class="planning-panel" aria-labelledby="resilience-title" hidden>
+          <div>
+            <h2 id="resilience-title">Portkey · Model resilience</h2>
+            <p id="resilience-state" role="status" aria-live="polite">Checking fault injection…</p>
+            <p class="planning-note">Inject a simulated model 429 during recovery planning to demonstrate Portkey’s automatic fallback. Applies to new operator investigations with recovery planning enabled.</p>
+            <p id="resilience-feedback" class="planning-note" role="status" aria-live="polite"></p>
+          </div>
+          <button id="resilience-toggle" type="button" disabled hidden>Checking…</button>
+        </section>
+      </div>
+    </details>
+    <footer>Powered by Amazon Bedrock AgentCore <span aria-hidden="true">·</span> Access protected by Amazon Cognito &amp; API Gateway</footer>
+  </main>
+</body>
+</html>

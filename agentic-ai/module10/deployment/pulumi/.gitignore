@@ -1,0 +1,4 @@
+Pulumi.*.yaml
+.pulumi/
+.venv/
+*.plan

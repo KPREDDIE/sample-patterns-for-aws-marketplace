@@ -15,6 +15,18 @@ import pytest
 
 
 @pytest.fixture(autouse=True)
+def isolate_module10_export(monkeypatch, request):
+    """Tests never load real account settings or contact a configured collector."""
+    if request.module.__name__.split(".")[-1].startswith("test_module10"):
+        from module10 import observability
+        monkeypatch.setattr(observability, "load_environment", lambda *args, **kwargs: None)
+        monkeypatch.setenv("MODULE10_OTLP_ENDPOINT", "")
+        for key in ("LOGZIO_REGION", "LOGZIO_LOGS_TOKEN", "LOGZIO_TRACES_TOKEN"):
+            monkeypatch.delenv(key, raising=False)
+        monkeypatch.delenv("MODULE10_DEMO_SESSION", raising=False)
+
+
+@pytest.fixture(autouse=True)
 def mock_memory_env(monkeypatch):
     """Enforce mock mode and reset store cache for every test."""
     monkeypatch.setenv("AGENT_MOCK_MEMORY", "true")

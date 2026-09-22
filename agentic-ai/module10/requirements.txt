@@ -1,0 +1,10 @@
+# Optional live integrations for Module 10.
+#
+# Mock mode uses the Python standard library plus the root project's rich
+# dependency. Install this file only when enabling live partner integrations.
+-r requirements-review.txt
+strands-agents[openai]>=1.0.0
+portkey-ai>=1.0.0
+opentelemetry-api>=1.20.0
+opentelemetry-sdk>=1.20.0
+opentelemetry-exporter-otlp-proto-http>=1.20.0
